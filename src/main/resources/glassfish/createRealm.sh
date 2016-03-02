@@ -15,4 +15,3 @@ encoding=base64:\
 charset=UTF-8 \
 esassRealm
 ./asadmin stop-domain
-./asadmin start-domain
