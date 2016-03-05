@@ -13,24 +13,30 @@
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="ESASS" brandHref="#" inverse="true" fixed="top">
-            <b:navbarLinks>
-                <b:navLink value="#{msg.secret}" outcome="/secured/secret"></b:navLink>
-                <b:navLink value="Link" href="#"></b:navLink>
-                <b:dropMenu value="Dropdown">
-                    <b:navLink value="Action" href="#"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-            </b:navbarLinks>
-            <b:navbarLinks pull="right">
-                <b:navLink value="Io sono a destra" href="#" />
-            </b:navbarLinks>
-        </b:navBar>
+        <h:form>
+            <b:navBar brand="ESASS" brandHref="#" inverse="true" fixed="top">
+                <b:navbarLinks>
+                    <b:navLink value="#{msg.secret}" outcome="/secured/secret"></b:navLink>
+                    <b:navLink value="Link" href="#"></b:navLink>
+                    <b:dropMenu value="Dropdown">
+                        <b:navLink value="Action" href="#"></b:navLink>
+                        <b:navLink value="Another action" href="#"></b:navLink>
+                        <b:navLink value="Something else here" href="#"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Nav header"></b:navLink>
+                        <b:navLink value="Separated link" href="#"></b:navLink>
+                        <b:navLink value="One more separated link" href="#"></b:navLink>
+                    </b:dropMenu>
+                </b:navbarLinks>
+                <b:navbarLinks pull="right">
+                    <b:navLink rendered="#{authenticator.loggedUser == null}" value="#{msg.signUp}" iconAwesome="user-plus"></b:navLink>
+                    <b:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
+                        <b:navLink value="#{msg.changePassword}" outcome="/secured/manageUser/changePassword" iconAwesome="key"></b:navLink>
+                        <b:navCommandLink value="#{msg.logout}" iconAwesome="sign-out" action="#{authenticator.logout()}"/>
+                    </b:dropMenu>
+                </b:navbarLinks>
+            </b:navBar>
+        </h:form>
         <b:jumbotron>
             <b:container>
                 <h1>ESASS</h1>
