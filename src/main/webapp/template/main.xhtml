@@ -14,20 +14,7 @@
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
         <h:form>
-            <b:navBar brand="ESASS" brandHref="#" inverse="true" fixed="top">
-                <b:navbarLinks>
-                    <b:navLink value="#{msg.secret}" outcome="/secured/secret"></b:navLink>
-                    <b:navLink value="Link" href="#"></b:navLink>
-                    <b:dropMenu value="Dropdown">
-                        <b:navLink value="Action" href="#"></b:navLink>
-                        <b:navLink value="Another action" href="#"></b:navLink>
-                        <b:navLink value="Something else here" href="#"></b:navLink>
-                        <b:navLink></b:navLink>
-                        <b:navLink header="Nav header"></b:navLink>
-                        <b:navLink value="Separated link" href="#"></b:navLink>
-                        <b:navLink value="One more separated link" href="#"></b:navLink>
-                    </b:dropMenu>
-                </b:navbarLinks>
+            <b:navBar brand="ESASS" brandHref="#" inverse="true" fixed="top" fluid="true">
                 <b:navbarLinks pull="right">
                     <b:navLink rendered="#{authenticator.loggedUser == null}" value="#{msg.signUp}" iconAwesome="user-plus"></b:navLink>
                     <b:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
@@ -37,17 +24,29 @@
                 </b:navbarLinks>
             </b:navBar>
         </h:form>
-        <b:jumbotron>
-            <b:container>
-                <h1>ESASS</h1>
-                <p>An easy and simple application for stores and shops</p>
-                <p>
-                    <a href="https://github.com/dmainardi/esass" class="btn btn-lg btn-info">View Project Source »</a>
-                </p>
-            </b:container>
-        </b:jumbotron>
-        <b:container>
-            <ui:insert name="content" />
+        <b:container fluid="true">
+            <b:row>
+                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink value="#{msg.secret}" outcome="/secured/secret"></b:navLink>
+                        <b:navLink header="BootsFaces" />
+                        <b:navLink href="http://www.bootsfaces.net" value="BootsFaces" icon="globe" iconAlign="right"/>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Bootstrap"/>
+                        <b:navLink href="#" value="Bootstrap" icon="link"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Preview"/>
+                        <b:navLink value="Labels and Badges" icon="tag" iconAlign="right"/>
+                        <b:navLink value="Slider" iconAwesome="sliders" />
+                    </b:listLinks>
+                </b:column>
+                <b:column col-sm="9" col-md="8" styleClass="main">
+                    <ui:insert name="content" />
+                </b:column>
+                <b:column col-md="2">
+                    <b:messages/>
+                </b:column>
+            </b:row>
         </b:container>
         <b:container>
             <footer>
