@@ -94,12 +94,12 @@ public class Authenticator implements Serializable {
                     userService.saveUserApp(loggedUser);
                 }
                 else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("New passwords must be equals"));
+                    FacesContext.getCurrentInstance().addMessage("changePasswordForm:newPassword1", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong new password", "New passwords must be equals"));
                     return null;
                 }
             }
             else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Old password is not valid"));
+                FacesContext.getCurrentInstance().addMessage("changePasswordForm:oldPassword", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong old password", "Old password is not valid"));
                 return null;
             }
         }
