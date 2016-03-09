@@ -15,29 +15,17 @@
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
         <h:form>
             <b:navBar brand="ESASS" brandHref="#" inverse="true" fixed="top" fluid="true">
-                <b:navbarLinks pull="right">
-                    <b:navLink rendered="#{authenticator.loggedUser == null}" value="#{msg.signUp}" iconAwesome="user-plus"></b:navLink>
-                    <b:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
-                        <b:navLink value="#{msg.changePassword}" outcome="/secured/manageUser/changePassword" iconAwesome="key"></b:navLink>
-                        <b:navCommandLink value="#{msg.logout}" iconAwesome="sign-out" action="#{authenticator.logout()}"/>
-                    </b:dropMenu>
+                <b:navbarLinks class="visible-xs">
+                    <ui:include src="sideMenu.xhtml"/>
                 </b:navbarLinks>
+                <ui:include src="topMenu.xhtml"/>
             </b:navBar>
         </h:form>
         <b:container fluid="true">
             <b:row>
-                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                <b:column hidden="xs" col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink value="#{msg.secret}" outcome="/secured/secret"></b:navLink>
-                        <b:navLink header="BootsFaces" />
-                        <b:navLink href="http://www.bootsfaces.net" value="BootsFaces" icon="globe" iconAlign="right"/>
-                        <b:navLink></b:navLink>
-                        <b:navLink header="Bootstrap"/>
-                        <b:navLink href="#" value="Bootstrap" icon="link"></b:navLink>
-                        <b:navLink></b:navLink>
-                        <b:navLink header="Preview"/>
-                        <b:navLink value="Labels and Badges" icon="tag" iconAlign="right"/>
-                        <b:navLink value="Slider" iconAwesome="sliders" />
+                        <ui:include src="sideMenu.xhtml"/>
                     </b:listLinks>
                 </b:column>
                 <b:column col-sm="9" col-md="8" styleClass="main">
