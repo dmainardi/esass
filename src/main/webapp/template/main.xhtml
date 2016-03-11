@@ -8,11 +8,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><ui:insert name='pageTitle'>ESASS</ui:insert></title>
+        <title>ESASS <ui:insert name='pageTitle'></ui:insert></title>
         <meta name="author" content="Davide Mainardi"></meta>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <h:body style="padding-top: 55px; padding-bottom: 20px;">
         <h:form>
             <b:navBar brand="ESASS" brandHref="/esass" inverse="true" fixed="top">
                 <b:navbarLinks class="visible-xs">
@@ -35,11 +35,6 @@
                     <b:messages/>
                 </b:column>
             </b:row>
-        </b:container>
-        <b:container>
-            <footer>
-                <p>© Mainardi Davide 2016</p>
-            </footer>
         </b:container>
     </h:body>
 </html>
