@@ -1,46 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>ESASS <ui:insert name='pageTitle'></ui:insert></title>
-        <meta name="author" content="Davide Mainardi"></meta>
-    </h:head>
-    <!-- Add 55px padding top and bottom to the body for the navbars -->
-    <h:body style="padding-top: 55px; padding-bottom: 55px;">
-        <h:form>
-            <b:navBar brand="ESASS" brandHref="/esass" inverse="true" fixed="top">
-                <b:navbarLinks class="visible-xs">
-                    <ui:include src="sideMenu.xhtml"/>
-                </b:navbarLinks>
-                <ui:include src="topMenu.xhtml"/>
-            </b:navBar>
-        </h:form>
-        <b:container fluid="true">
-            <b:row>
-                <b:column hidden="xs" col-sm="3" col-md="2" styleClass="sidebar">
-                    <b:listLinks>
-                        <ui:include src="sideMenu.xhtml"/>
-                    </b:listLinks>
-                </b:column>
-                <b:column col-sm="9" col-md="8" styleClass="main">
-                    <div class="page-header">
-                        <h1><ui:insert name="contentTitle" /></h1>
-                    </div>
-                    <p class="lead"><ui:insert name="contentSubtitle" /></p>
-                    <ui:insert name="content" />
-                </b:column>
-                <b:column col-md="2">
-                    <b:messages/>
-                </b:column>
-            </b:row>
-        </b:container>
-        <b:navBar brand="&copy;2016 Mainardi Davide" brandHref="https://github.com/dmainardi/esass" fixed="bottom"/>
-    </h:body>
+    <ui:composition template="/template/basic.xhtml">
+        <ui:define name="sideMenuOnlyXsVisible">
+            <b:navbarLinks class="visible-xs">
+                <ui:include src="sideMenu.xhtml"/>
+            </b:navbarLinks>
+        </ui:define>
+        <ui:define name="titleAndSubtitle">
+            <div class="page-header">
+                <h1><ui:insert name="contentTitle" /></h1>
+            </div>
+            <p class="lead"><ui:insert name="contentSubtitle" /></p>
+        </ui:define>
+    </ui:composition>
 </html>
 
