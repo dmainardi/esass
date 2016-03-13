@@ -17,6 +17,7 @@
 package com.dmainardi.esass.presentation;
 
 import com.dmainardi.esass.business.boundary.UserService;
+import com.dmainardi.esass.business.entity.GroupApp;
 import com.dmainardi.esass.business.entity.UserApp;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -121,6 +122,14 @@ public class Authenticator implements Serializable {
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             return "Error";
         }
+    }
+    
+    public boolean isLoggedUserAdmin() {
+        if (loggedUser != null)
+            for (GroupApp group : loggedUser.getGroups())
+                if ("admin".equalsIgnoreCase(group.getGroupName()))
+                    return true;
+        return false;
     }
 
     public String getUserName() {
