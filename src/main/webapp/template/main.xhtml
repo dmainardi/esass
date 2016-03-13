@@ -11,8 +11,8 @@
         <title>ESASS <ui:insert name='pageTitle'></ui:insert></title>
         <meta name="author" content="Davide Mainardi"></meta>
     </h:head>
-    <!-- Add 50px padding top to the body for the navbar -->
-    <h:body style="padding-top: 55px; padding-bottom: 20px;">
+    <!-- Add 55px padding top and bottom to the body for the navbars -->
+    <h:body style="padding-top: 55px; padding-bottom: 55px;">
         <h:form>
             <b:navBar brand="ESASS" brandHref="/esass" inverse="true" fixed="top">
                 <b:navbarLinks class="visible-xs">
@@ -29,6 +29,10 @@
                     </b:listLinks>
                 </b:column>
                 <b:column col-sm="9" col-md="8" styleClass="main">
+                    <div class="page-header">
+                        <h1><ui:insert name="contentTitle" /></h1>
+                    </div>
+                    <p class="lead"><ui:insert name="contentSubtitle" /></p>
                     <ui:insert name="content" />
                 </b:column>
                 <b:column col-md="2">
@@ -36,6 +40,7 @@
                 </b:column>
             </b:row>
         </b:container>
+        <b:navBar brand="&copy;2016 Mainardi Davide" brandHref="https://github.com/dmainardi/esass" fixed="bottom"/>
     </h:body>
 </html>
 

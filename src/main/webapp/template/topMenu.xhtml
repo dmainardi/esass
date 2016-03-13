@@ -2,7 +2,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:bnu="http://bootsfaces.net/ui">
     <bnu:navbarLinks pull="right">
-        <bnu:navLink rendered="#{authenticator.loggedUser == null}" value="#{msg.signUp}" iconAwesome="user-plus"></bnu:navLink>
+        <bnu:navLink value="#{msg.signUp}" outcome="/createUser" rendered="#{authenticator.loggedUser == null}" iconAwesome="user-plus"></bnu:navLink>
         <bnu:dropMenu rendered="#{authenticator.loggedUser != null}" value="#{authenticator.loggedUser.userName}" iconAwesome="user">
             <bnu:navLink value="#{msg.changePassword}" outcome="/secured/manageUser/changePassword" iconAwesome="key"></bnu:navLink>
             <bnu:navCommandLink value="#{msg.logout}" iconAwesome="sign-out" action="#{authenticator.logout()}"/>

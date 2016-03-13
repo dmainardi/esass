@@ -65,17 +65,17 @@ public class Authenticator implements Serializable {
                     userService.saveUserApp(loggedUser);
                 }
                 else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("New passwords must be equals"));
+                    FacesContext.getCurrentInstance().addMessage("createUserForm:newPassword2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong new password", "New passwords must be equals"));
                     return null;
                 }
             }
             else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("'" + userName + "' is already present. Choose another username."));
+                FacesContext.getCurrentInstance().addMessage("createUserForm:username", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong username", "'" + userName + "' is already present. Choose another username."));
                 return null;
             }
         }
         else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You must logout before create a new user"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "You must logout before create a new user"));
             return null;
         }
         return "/index?faces-redirect=true";
@@ -94,7 +94,7 @@ public class Authenticator implements Serializable {
                     userService.saveUserApp(loggedUser);
                 }
                 else {
-                    FacesContext.getCurrentInstance().addMessage("changePasswordForm:newPassword1", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong new password", "New passwords must be equals"));
+                    FacesContext.getCurrentInstance().addMessage("changePasswordForm:newPassword2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong new password", "New passwords must be equals"));
                     return null;
                 }
             }
