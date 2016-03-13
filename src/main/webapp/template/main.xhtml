@@ -4,11 +4,6 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/template/basic.xhtml">
-        <ui:define name="sideMenuOnlyXsVisible">
-            <b:navbarLinks class="visible-xs">
-                <ui:include src="sideMenu.xhtml"/>
-            </b:navbarLinks>
-        </ui:define>
         <ui:define name="titleAndSubtitle">
             <div class="page-header">
                 <h1><ui:insert name="contentTitle" /></h1>
