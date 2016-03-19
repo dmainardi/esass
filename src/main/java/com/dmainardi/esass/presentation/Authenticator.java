@@ -60,10 +60,10 @@ public class Authenticator implements Serializable {
         if (loggedUser == null) {
             if (userService.readUserApp(userName) == null) {
                 if (newPassword1.equals(newPassword2)) {
-                    loggedUser = new UserApp();
-                    loggedUser.setUserName(userName);
-                    loggedUser.setPassword(hashPassword(newPassword1));
-                    userService.saveUserApp(loggedUser);
+                    UserApp newUser = new UserApp();
+                    newUser.setUserName(userName);
+                    newUser.setPassword(hashPassword(newPassword1));
+                    userService.createUserApp(newUser);
                 }
                 else {
                     FacesContext.getCurrentInstance().addMessage("createUserForm:newPassword2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong new password", "New passwords must be equals"));
@@ -79,6 +79,7 @@ public class Authenticator implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "You must logout before create a new user"));
             return null;
         }
+        cleanUserData();
         return "/index?faces-redirect=true";
     }
     
@@ -104,6 +105,7 @@ public class Authenticator implements Serializable {
                 return null;
             }
         }
+        cleanUserData();
         return "/index?faces-redirect=true";
     }
     
@@ -130,6 +132,13 @@ public class Authenticator implements Serializable {
                 if ("admin".equalsIgnoreCase(group.getGroupName()))
                     return true;
         return false;
+    }
+    
+    private void cleanUserData() {
+        userName = "";
+        oldPassword = "";
+        newPassword1 = "";
+        newPassword2 = "";
     }
 
     public String getUserName() {

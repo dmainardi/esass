@@ -37,12 +37,11 @@ public class UserService {
     EntityManager em;
     
     public UserApp saveUserApp(UserApp userApp) {
-        if (userApp.getUserName() == null)
-            em.persist(userApp);
-        else
-            return em.merge(userApp);
-        
-        return null;
+        return em.merge(userApp);
+    }
+    
+    public void createUserApp(UserApp userApp) {
+        em.persist(userApp);
     }
     
     public UserApp readUserApp(String userName) {
