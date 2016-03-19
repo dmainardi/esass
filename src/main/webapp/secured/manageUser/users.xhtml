@@ -13,8 +13,8 @@
             <h:form id="userForm">
                 <p:dataTable id="usersList" var="userApp" value="#{listUserPresenter.users}" selectionMode="multiple" selection="#{listUserPresenter.selectedUsers}" rowKey="#{userApp.userName}">
                     <f:facet name="header">
-                        <p:commandButton value="Delete" actionListener="#{listUserPresenter.deleteUsers()}" update="@form">
-                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert"/>
+                        <p:commandButton value="#{msg.delete}" actionListener="#{listUserPresenter.deleteUsers()}" update="@form">
+                            <p:confirm header="#{msg.manageUsers_users_delete}" message="#{msg.manageUsers_users_delete_tip}" icon="ui-icon-alert"/>
                         </p:commandButton>
                     </f:facet>
                     <p:column headerText="#{msg.login_username}">
