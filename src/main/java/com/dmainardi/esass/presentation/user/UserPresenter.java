@@ -19,13 +19,10 @@ package com.dmainardi.esass.presentation.user;
 import com.dmainardi.esass.business.boundary.UserService;
 import com.dmainardi.esass.business.entity.GroupApp;
 import com.dmainardi.esass.business.entity.UserApp;
-import com.dmainardi.esass.presentation.Authenticator;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,9 +37,6 @@ public class UserPresenter implements Serializable {
     @Inject
     UserService userService;
     
-    @Inject
-    Authenticator authenticator;
-    
     private UserApp user;
     
     @PostConstruct
@@ -54,33 +48,11 @@ public class UserPresenter implements Serializable {
     public void exit() {
         System.out.println("Exited user flow");
     }
-        
-    public void deleteUserApp(UserApp user) {
-        if (user.getUserName().equals(authenticator.getLoggedUser().getUserName()))
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You cannot delete yourself."));
-        else
-            userService.deleteUserApp(user);
-    }
     
     public String saveUserApp() {
         userService.saveUserApp(user);
         
         return "/secured/manageUser/users?faces-redirect=true";
-    }
-    
-    public String detailUserApp(String userName) {
-        if (userName == null)
-            user = new UserApp();
-        else {
-            if (userName.equals(authenticator.getLoggedUser().getUserName())) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You cannot change yourself."));
-                return null;
-            }
-            else
-                user = userService.readUserApp(userName);
-        }
-        
-        return "/secured/manageUser/user?faces-redirect=true";
     }
 
     public UserApp getUserApp() {

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
@@ -29,6 +30,12 @@
                     </b:listLinks>
                 </b:column>
                 <b:column col-sm="9" col-md="8" styleClass="main">
+                    <h:form>
+                        <p:confirmDialog global="true">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                        </p:confirmDialog>
+                    </h:form>
                     <ui:insert name="titleAndSubtitle"/>
                     <ui:insert name="content" />
                 </b:column>

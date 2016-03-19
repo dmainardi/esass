@@ -18,9 +18,12 @@ package com.dmainardi.esass.presentation.user;
 
 import com.dmainardi.esass.business.boundary.UserService;
 import com.dmainardi.esass.business.entity.UserApp;
+import com.dmainardi.esass.presentation.Authenticator;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,16 +36,42 @@ import javax.inject.Named;
 @ViewScoped
 public class ListUserPresenter implements Serializable{
     private List<UserApp> users;
+    private List<UserApp> selectedUsers;
     
     @Inject
     UserService userService;
+    
+    @Inject
+    Authenticator authenticator;
     
     @PostConstruct
     public void init() {
         users = userService.listUserApps();
     }
+    
+    public void deleteUsers() {
+        if (selectedUsers != null && !selectedUsers.isEmpty()) {
+            for (UserApp userTemp : selectedUsers)
+                if (userTemp.getUserName().equals(authenticator.getLoggedUser().getUserName()))
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error in deleting user", "You cannot delete yourself"));
+                else {
+                    userService.deleteUserApp(userTemp);
+                    users = userService.listUserApps();
+                }
+        }
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a user before deleting"));
+    }
 
     public List<UserApp> getUsers() {
         return users;
+    }
+
+    public List<UserApp> getSelectedUsers() {
+        return selectedUsers;
+    }
+
+    public void setSelectedUsers(List<UserApp> selectedUsers) {
+        this.selectedUsers = selectedUsers;
     }
 }
