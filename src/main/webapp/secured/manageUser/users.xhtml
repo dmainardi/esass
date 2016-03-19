@@ -3,20 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.manageUsers}</ui:define>
         <ui:define name="contentSubtitle">#{msg.manageUsers_tip}</ui:define>
         <ui:define name="content">
-            <p:dataTable var="userApp" value="#{userPresenter.listUserApps()}">
-                <p:column headerText="#{msg.login_username}">
-                    <h:outputText value="#{userApp.userName}"/>
-                </p:column>
-                <p:column headerText="#{msg.manageUsers_users_isActivated}">
-                    <h:outputText value="#{userApp.activated}"/>
-                </p:column>
-            </p:dataTable>
-            <h:link value="Homepage" outcome="exitFlow"/>
+            <h:form>
+                <p:dataTable var="userApp" value="#{listUserPresenter.users}">
+                    <p:column headerText="#{msg.login_username}">
+                        <h:outputText value="#{userApp.userName}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.manageUsers_users_isActivated}">
+                        <p:selectBooleanCheckbox value="#{userApp.activated}" disabled="true"/>
+                    </p:column>
+                    <p:column headerText="#{msg.actions}">
+                        <h:link value="Edit" outcome="/secured/manageUser/user">
+                            <f:param name="id" value="#{userApp.userName}" />
+                        </h:link>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

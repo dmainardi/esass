@@ -26,7 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.flow.FlowScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,7 +35,7 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@FlowScoped("manageUser")
+@ViewScoped
 public class UserPresenter implements Serializable {
     @Inject
     UserService userService;
@@ -53,10 +53,6 @@ public class UserPresenter implements Serializable {
     @PreDestroy
     public void exit() {
         System.out.println("Exited user flow");
-    }
-    
-    public List<UserApp> listUserApps() {
-        return userService.listUserApps();
     }
         
     public void deleteUserApp(UserApp user) {

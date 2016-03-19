@@ -16,26 +16,33 @@
  */
 package com.dmainardi.esass.presentation.user;
 
-import javax.enterprise.inject.Produces;
-import javax.faces.flow.Flow;
-import javax.faces.flow.builder.FlowBuilder;
-import javax.faces.flow.builder.FlowBuilderParameter;
-import javax.faces.flow.builder.FlowDefinition;
+import com.dmainardi.esass.business.boundary.UserService;
+import com.dmainardi.esass.business.entity.UserApp;
+import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class UserFlow {
-    @Produces
-    @FlowDefinition
-    public Flow defineUserFlow(@FlowBuilderParameter FlowBuilder flowBuilder) {
-        flowBuilder.id("", "manageUser");
+@Named
+@ViewScoped
+public class ListUserPresenter implements Serializable{
+    private List<UserApp> users;
+    
+    @Inject
+    UserService userService;
+    
+    @PostConstruct
+    public void init() {
+        users = userService.listUserApps();
+    }
 
-        flowBuilder.viewNode("list", "/secured/manageUser/users.xhtml").markAsStartNode();
-
-        flowBuilder.returnNode("exitFlow").fromOutcome("/index");
-
-        return flowBuilder.getFlow();
+    public List<UserApp> getUsers() {
+        return users;
     }
 }
