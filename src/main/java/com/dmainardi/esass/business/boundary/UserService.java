@@ -48,6 +48,10 @@ public class UserService {
         return em.find(UserApp.class, userName);
     }
     
+    public GroupApp readGroupApp(String groupName) {
+        return em.find(GroupApp.class, groupName);
+    }
+    
     @RolesAllowed("admin")
     public void deleteUserApp(UserApp userApp) {
         em.remove(em.merge(userApp));

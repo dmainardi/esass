@@ -21,11 +21,10 @@ import com.dmainardi.esass.business.entity.GroupApp;
 import com.dmainardi.esass.business.entity.UserApp;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -39,17 +38,11 @@ public class UserPresenter implements Serializable {
     
     private UserApp user;
     
-    @PostConstruct
-    public void init() {
-        System.out.println("Entered user flow");
-    }
-    
-    @PreDestroy
-    public void exit() {
-        System.out.println("Exited user flow");
-    }
+    private DualListModel<GroupApp> groups = new DualListModel<>();
     
     public String saveUserApp() {
+        user.getGroups().clear();
+        user.getGroups().addAll(groups.getTarget());
         userService.saveUserApp(user);
         
         return "/secured/manageUser/users?faces-redirect=true";
@@ -75,4 +68,15 @@ public class UserPresenter implements Serializable {
     public List<GroupApp> avaibleGroups(UserApp user) {
         return userService.avaibleGroups(user);
     }
+
+    public DualListModel<GroupApp> getGroups() {
+        groups.setSource(userService.avaibleGroups(user));
+        groups.setTarget(user.getGroups());
+        return groups;
+    }
+
+    public void setGroups(DualListModel<GroupApp> groups) {
+        this.groups = groups;
+    }
+    
 }

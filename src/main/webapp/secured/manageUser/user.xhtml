@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.manageUsers_user}</ui:define>
         <ui:define name="contentSubtitle">#{msg.manageUsers_user_tip}</ui:define>
@@ -11,12 +13,18 @@
             <f:metadata>
                 <f:viewParam name="id" value="#{userPresenter.userApp}" 
                              converter="#{userConverter}" converterMessage="Unknown user, please use a link from within the system."
-                             required="true" requiredMessage="Bad request, please use a link from within the system."
-                             />
+                             required="true" requiredMessage="Bad request, please use a link from within the system."/>
             </f:metadata>
 
-            <h:outputText value="#{userPresenter.userApp.userName}"/>
-            <h:outputText value="#{userPresenter.userApp.password}"/>
+            <h:form>
+                <bnu:panelGrid colSpans="2,10">
+                    <h:outputLabel for="username" value="#{msg.login_username}"/>
+                    <h:outputText id="username" value="#{userPresenter.userApp.userName}"/>
+                </bnu:panelGrid>
+                <p:pickList value="#{userPresenter.groups}" var="gr" itemLabel="#{gr.groupName}" itemValue="#{gr}" converter="#{groupConverter}"/>
+                <bnu:button value="#{msg.cancel}" outcome="/secured/manageUser/users"/>
+                <h:commandButton value="#{msg.save}" styleClass="btn btn-primary" action="#{userPresenter.saveUserApp()}"/>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
