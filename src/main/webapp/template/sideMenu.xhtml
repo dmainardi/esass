@@ -1,6 +1,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:bnu="http://bootsfaces.net/ui">
+    <bnu:navLink header="#{msg.masterDataSet}" />
+    <bnu:navLink value="#{msg.customerSupplier_customers}" outcome="/secured/customerSupplier/customers"/>
+    <bnu:navLink value="#{msg.customerSupplier_suppliers}" outcome="/secured/customerSupplier/suppliers"/>
     <bnu:navLink value="#{msg.secret}" outcome="/secured/secret"></bnu:navLink>
     <bnu:navLink header="BootsFaces" />
     <bnu:navLink href="http://www.bootsfaces.net" value="BootsFaces" icon="globe" iconAlign="right"/>
