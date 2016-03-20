@@ -21,7 +21,11 @@
                     <h:outputLabel for="username" value="#{msg.login_username}"/>
                     <h:outputText id="username" value="#{userPresenter.userApp.userName}"/>
                 </bnu:panelGrid>
-                <p:pickList value="#{userPresenter.groups}" var="gr" itemLabel="#{gr.groupName}" itemValue="#{gr}" converter="#{groupConverter}"/>
+                <p:pickList value="#{userPresenter.groups}" var="gr" itemLabel="#{gr.groupName}" itemValue="#{gr}"
+                            converter="#{groupConverter}" responsive="true">
+                    <f:facet name="sourceCaption">#{msg.manageUsers_user_avaibleGroups}</f:facet>
+                    <f:facet name="targetCaption">#{msg.manageUsers_user_groups}</f:facet>
+                </p:pickList>
                 <bnu:button value="#{msg.cancel}" outcome="/secured/manageUser/users"/>
                 <h:commandButton value="#{msg.save}" styleClass="btn btn-primary" action="#{userPresenter.saveUserApp()}"/>
             </h:form>
