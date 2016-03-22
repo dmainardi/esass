@@ -11,7 +11,11 @@
         <ui:define name="contentSubtitle">#{msg.customerSupplier_customers_tip}</ui:define>
         <ui:define name="content">
             <h:form id="customerForm">
-                <p:dataTable id="customersList" var="customer" value="#{listCustomerPresenter.customers}" selectionMode="multiple" selection="#{listCustomerPresenter.selectedCustomers}" rowKey="#{customer.id}">
+                <p:dataTable id="customersList" var="customer" value="#{listCustomerPresenter.customers}"
+                             selectionMode="multiple" selection="#{listCustomerPresenter.selectedCustomers}" rowKey="#{customer.id}"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,25,50">
                     <f:facet name="header">
                         <p:commandButton value="#{msg.delete}" actionListener="#{listCustomerPresenter.deleteCustomers()}" update="@form">
                             <p:confirm header="#{msg.customerSupplier_customers_delete}" message="#{msg.customerSupplier_customers_delete_tip}" icon="ui-icon-alert"/>
