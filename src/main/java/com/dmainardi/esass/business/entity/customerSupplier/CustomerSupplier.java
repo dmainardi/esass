@@ -49,7 +49,7 @@ public class CustomerSupplier extends BaseEntity<Long>{
     @NotNull
     private String name;
     
-    private String vatRegistrationNumer;
+    private String vatRegistrationNumber;
     private String taxCode;
     
     @Column(nullable = false)
@@ -65,6 +65,8 @@ public class CustomerSupplier extends BaseEntity<Long>{
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerSupplier", orphanRemoval = true)
     private List<Referee> referees;
+    
+    private String notes;
 
     public CustomerSupplier() {
         isCustomer = false;
@@ -87,14 +89,6 @@ public class CustomerSupplier extends BaseEntity<Long>{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getVatRegistrationNumer() {
-        return vatRegistrationNumer;
-    }
-
-    public void setVatRegistrationNumer(String vatRegistrationNumer) {
-        this.vatRegistrationNumer = vatRegistrationNumer;
     }
 
     public String getTaxCode() {
@@ -132,6 +126,22 @@ public class CustomerSupplier extends BaseEntity<Long>{
 
     public List<Referee> getReferees() {
         return referees;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getVatRegistrationNumber() {
+        return vatRegistrationNumber;
+    }
+
+    public void setVatRegistrationNumber(String vatRegistrationNumber) {
+        this.vatRegistrationNumber = vatRegistrationNumber;
     }
     
 }

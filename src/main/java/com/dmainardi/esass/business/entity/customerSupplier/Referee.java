@@ -48,6 +48,8 @@ public class Referee extends BaseEntity<Long>{
     
     @ManyToOne(optional = false)
     private CustomerSupplier customerSupplier;
+    
+    private String notes;
 
     public Referee() {
     }
@@ -95,6 +97,14 @@ public class Referee extends BaseEntity<Long>{
     @Override
     public Long getId() {
         return id;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
     
 }

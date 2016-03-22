@@ -17,10 +17,13 @@
 package com.dmainardi.esass.presentation.customerSupplier;
 
 import com.dmainardi.esass.business.boundary.customerSupplier.CustomerSupplierService;
+import com.dmainardi.esass.business.entity.UserApp;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,23 +34,42 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class ListCustomerSupplierPresenter implements Serializable{
+public class ListCustomerPresenter implements Serializable{
     @Inject
     CustomerSupplierService customerSupplierService;
     
-    List<CustomerSupplier> customerSuppliers;
+    private List<CustomerSupplier> customers;
+    private List<CustomerSupplier> selectedCustomers;
     
     @PostConstruct
     public void init() {
-        customerSuppliers = customerSupplierService.listCustomerSuppliers();
+        customers = customerSupplierService.listCustomerSuppliers(true, null);
+    }
+    
+    public void deleteCustomers() {
+        if (selectedCustomers != null && !selectedCustomers.isEmpty()) {
+            for (CustomerSupplier userTemp : selectedCustomers)
+                customerSupplierService.deleteCustomerSupplier(userTemp);
+            customers = customerSupplierService.listCustomerSuppliers(true, null);
+        }
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a customer before deleting"));
     }
 
-    public List<CustomerSupplier> getCustomerSuppliers() {
-        return customerSuppliers;
+    public List<CustomerSupplier> getCustomers() {
+        return customers;
     }
 
-    public void setCustomerSuppliers(List<CustomerSupplier> customerSuppliers) {
-        this.customerSuppliers = customerSuppliers;
+    public void setCustomers(List<CustomerSupplier> customers) {
+        this.customers = customers;
+    }
+
+    public List<CustomerSupplier> getSelectedCustomers() {
+        return selectedCustomers;
+    }
+
+    public void setSelectedCustomers(List<CustomerSupplier> selectedCustomers) {
+        this.selectedCustomers = selectedCustomers;
     }
     
 }

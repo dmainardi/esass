@@ -54,10 +54,9 @@ public class ListUserPresenter implements Serializable{
             for (UserApp userTemp : selectedUsers)
                 if (userTemp.getUserName().equals(authenticator.getLoggedUser().getUserName()))
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error in deleting user", "You cannot delete yourself"));
-                else {
+                else
                     userService.deleteUserApp(userTemp);
-                    users = userService.listUserApps();
-                }
+            users = userService.listUserApps();
         }
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a user before deleting"));

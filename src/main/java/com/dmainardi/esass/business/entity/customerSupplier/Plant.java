@@ -55,6 +55,8 @@ public class Plant extends BaseEntity<Long>{
     
     @ManyToOne(optional = false)
     private CustomerSupplier customerSupplier;
+    
+    private String notes;
 
     public Plant() {
     }
@@ -118,6 +120,14 @@ public class Plant extends BaseEntity<Long>{
     @Override
     public Long getId() {
         return id;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
     
 }
