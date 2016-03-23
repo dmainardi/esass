@@ -17,7 +17,6 @@
 package com.dmainardi.esass.presentation.customerSupplier;
 
 import com.dmainardi.esass.business.boundary.customerSupplier.CustomerSupplierService;
-import com.dmainardi.esass.business.entity.UserApp;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
 import java.io.Serializable;
 import java.util.List;
@@ -38,30 +37,25 @@ public class ListCustomerPresenter implements Serializable{
     @Inject
     CustomerSupplierService customerSupplierService;
     
-    private List<CustomerSupplier> customers;
+    private LazyCustomerSupplierDataModel lazyCustomers;
     private List<CustomerSupplier> selectedCustomers;
     
     @PostConstruct
     public void init() {
-        customers = customerSupplierService.listCustomerSuppliers(true, null);
+        lazyCustomers = new LazyCustomerSupplierDataModel(customerSupplierService, Boolean.TRUE, null);
     }
     
     public void deleteCustomers() {
         if (selectedCustomers != null && !selectedCustomers.isEmpty()) {
             for (CustomerSupplier userTemp : selectedCustomers)
                 customerSupplierService.deleteCustomerSupplier(userTemp);
-            customers = customerSupplierService.listCustomerSuppliers(true, null);
         }
         else
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a customer before deleting"));
     }
 
-    public List<CustomerSupplier> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<CustomerSupplier> customers) {
-        this.customers = customers;
+    public LazyCustomerSupplierDataModel getLazyCustomers() {
+        return lazyCustomers;
     }
 
     public List<CustomerSupplier> getSelectedCustomers() {

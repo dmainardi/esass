@@ -35,19 +35,5 @@ public class ListSupplierPresenter implements Serializable{
     @Inject
     CustomerSupplierService customerSupplierService;
     
-    List<CustomerSupplier> suppliers;
-    
-    @PostConstruct
-    public void init() {
-        suppliers = customerSupplierService.listCustomerSuppliers(null, true);
-    }
-
-    public List<CustomerSupplier> getSuppliers() {
-        return suppliers;
-    }
-
-    public void setSuppliers(List<CustomerSupplier> suppliers) {
-        this.suppliers = suppliers;
-    }
     
 }

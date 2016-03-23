@@ -19,10 +19,13 @@ package com.dmainardi.esass.business.boundary.customerSupplier;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier_;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -34,33 +37,34 @@ import javax.persistence.criteria.Root;
  */
 @Stateless
 public class CustomerSupplierService {
-    
+
     @PersistenceContext
     EntityManager em;
-    
+
     public CustomerSupplier saveCustomerSupplier(CustomerSupplier customerSupplier) {
-        if (customerSupplier.getId() == null)
+        if (customerSupplier.getId() == null) {
             em.persist(customerSupplier);
-        else
+        } else {
             return em.merge(customerSupplier);
-        
+        }
+
         return null;
     }
-    
+
     public CustomerSupplier readCustomerSupplier(Long id) {
         return em.find(CustomerSupplier.class, id);
     }
-    
+
     public void deleteCustomerSupplier(CustomerSupplier customerSupplier) {
         em.remove(em.merge(customerSupplier));
     }
 
-    public List<CustomerSupplier> listCustomerSuppliers(Boolean isCustomer, Boolean isSupplier) {
+    public List<CustomerSupplier> listCustomerSuppliers(Boolean isCustomer, Boolean isSupplier, int first, int pageSize, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<CustomerSupplier> query = cb.createQuery(CustomerSupplier.class);
         Root<CustomerSupplier> root = query.from(CustomerSupplier.class);
         CriteriaQuery<CustomerSupplier> select = query.select(root).distinct(true);
-        
+
         List<Predicate> conditions = new ArrayList<>();
         //customer
         if (isCustomer != null) {
@@ -70,11 +74,53 @@ public class CustomerSupplierService {
         if (isSupplier != null) {
             conditions.add(cb.equal(root.get(CustomerSupplier_.isSupplier), isSupplier));
         }
+        
+        if (filters != null) {
+            for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+                String filterProperty = it.next();
+                conditions.add(cb.like(cb.lower(root.get(filterProperty)), "%" + String.valueOf(filters.get(filterProperty)).toLowerCase() + "%"));
+            }
+        }
+
         if (!conditions.isEmpty()) {
             query.where(conditions.toArray(new Predicate[conditions.size()]));
         }
-        
-        return em.createQuery(select).getResultList();
+
+        TypedQuery<CustomerSupplier> typedQuery = em.createQuery(select);
+        typedQuery.setMaxResults(pageSize);
+        typedQuery.setFirstResult(first);
+
+        return typedQuery.getResultList();
     }
     
+    public Long getCustomerSuppliersNumber(Boolean isCustomer, Boolean isSupplier, int first, int pageSize, Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<CustomerSupplier> root = query.from(CustomerSupplier.class);
+        CriteriaQuery<Long> select = query.select(cb.count(root));
+
+        List<Predicate> conditions = new ArrayList<>();
+        //customer
+        if (isCustomer != null) {
+            conditions.add(cb.equal(root.get(CustomerSupplier_.isCustomer), isCustomer));
+        }
+        //supplier
+        if (isSupplier != null) {
+            conditions.add(cb.equal(root.get(CustomerSupplier_.isSupplier), isSupplier));
+        }
+        
+        if (filters != null) {
+            for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+                String filterProperty = it.next();
+                conditions.add(cb.like(cb.lower(root.get(filterProperty)), "%" + String.valueOf(filters.get(filterProperty)).toLowerCase() + "%"));
+            }
+        }
+
+        if (!conditions.isEmpty()) {
+            query.where(conditions.toArray(new Predicate[conditions.size()]));
+        }
+
+        return em.createQuery(select).getSingleResult();
+    }
+
 }
