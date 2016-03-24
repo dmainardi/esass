@@ -59,7 +59,7 @@ public class CustomerSupplierService {
         em.remove(em.merge(customerSupplier));
     }
 
-    public List<CustomerSupplier> listCustomerSuppliers(Boolean isCustomer, Boolean isSupplier, int first, int pageSize, Map<String, Object> filters) {
+    public List<CustomerSupplier> listCustomerSuppliers(Boolean isCustomer, Boolean isSupplier, int first, int pageSize, Map<String, Object> filters, String sortField, Boolean isAscending) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<CustomerSupplier> query = cb.createQuery(CustomerSupplier.class);
         Root<CustomerSupplier> root = query.from(CustomerSupplier.class);
@@ -85,7 +85,14 @@ public class CustomerSupplierService {
         if (!conditions.isEmpty()) {
             query.where(conditions.toArray(new Predicate[conditions.size()]));
         }
-
+        
+        if (isAscending != null && sortField != null && !sortField.isEmpty()) {
+            if (isAscending)
+                query.orderBy(cb.asc(root.get(sortField)));
+            else
+                query.orderBy(cb.desc(root.get(sortField)));
+        }
+        
         TypedQuery<CustomerSupplier> typedQuery = em.createQuery(select);
         typedQuery.setMaxResults(pageSize);
         typedQuery.setFirstResult(first);
@@ -93,7 +100,7 @@ public class CustomerSupplierService {
         return typedQuery.getResultList();
     }
     
-    public Long getCustomerSuppliersNumber(Boolean isCustomer, Boolean isSupplier, int first, int pageSize, Map<String, Object> filters) {
+    public Long getCustomerSuppliersNumber(Boolean isCustomer, Boolean isSupplier, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<CustomerSupplier> root = query.from(CustomerSupplier.class);

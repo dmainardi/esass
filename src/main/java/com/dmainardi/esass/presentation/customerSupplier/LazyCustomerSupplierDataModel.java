@@ -55,8 +55,19 @@ public class LazyCustomerSupplierDataModel extends LazyDataModel<CustomerSupplie
 
     @Override
     public List<CustomerSupplier> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        List<CustomerSupplier> result = service.listCustomerSuppliers(isCustomer, isSupplier, first, pageSize, filters);
-        this.setRowCount(service.getCustomerSuppliersNumber(isCustomer, isSupplier, first, pageSize, filters).intValue());
+        Boolean isAscending = null;
+        
+        switch (sortOrder) {
+            case ASCENDING:
+                isAscending = Boolean.TRUE;
+                break;
+            case DESCENDING:
+                isAscending = Boolean.FALSE;
+                break;
+            default:
+        }
+        List<CustomerSupplier> result = service.listCustomerSuppliers(isCustomer, isSupplier, first, pageSize, filters, sortField, isAscending);
+        this.setRowCount(service.getCustomerSuppliersNumber(isCustomer, isSupplier, filters).intValue());
         
         return result;
     }

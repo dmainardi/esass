@@ -21,10 +21,10 @@
                             <p:confirm header="#{msg.customerSupplier_customers_delete}" message="#{msg.customerSupplier_customers_delete_tip}" icon="ui-icon-alert"/>
                         </p:commandButton>
                     </f:facet>
-                    <p:column headerText="#{msg.customerSupplier_customer_businessName}" filterBy="#{customer.businessName}">
+                    <p:column headerText="#{msg.customerSupplier_customer_businessName}" filterBy="#{customer.businessName}" sortBy="#{customer.businessName}" priority="3">
                         <h:outputText value="#{customer.businessName}"/>
                     </p:column>
-                    <p:column headerText="#{msg.customerSupplier_customer_name}" filterBy="#{customer.name}">
+                    <p:column headerText="#{msg.customerSupplier_customer_name}" filterBy="#{customer.name}" sortBy="#{customer.name}">
                         <h:outputText value="#{customer.name}"/>
                     </p:column>
                     <p:column headerText="#{msg.actions}">
