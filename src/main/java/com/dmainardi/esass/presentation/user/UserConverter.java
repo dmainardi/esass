@@ -43,11 +43,7 @@ public class UserConverter implements Converter {
             return null;
         }
 
-        try {
-            return userService.readUserApp(value);
-        } catch (NumberFormatException e) {
-            throw new ConverterException("The value is not a valid username: " + value, e);
-        }
+        return userService.readUserApp(value);
     }
 
     @Override

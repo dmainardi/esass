@@ -43,11 +43,7 @@ public class GroupConverter implements Converter {
             return null;
         }
 
-        try {
-            return userService.readGroupApp(value);
-        } catch (NumberFormatException e) {
-            throw new ConverterException("The value is not a valid groupname: " + value, e);
-        }
+        return userService.readGroupApp(value);
     }
 
     @Override

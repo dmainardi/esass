@@ -16,10 +16,52 @@
  */
 package com.dmainardi.esass.presentation.customerSupplier;
 
+import com.dmainardi.esass.business.boundary.customerSupplier.CustomerSupplierService;
+import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
+import java.io.Serializable;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class CustomerSupplierPresenter {
+@Named
+@ViewScoped
+public class CustomerSupplierPresenter implements Serializable {
+    
+    @Inject
+    CustomerSupplierService service;
+    
+    private CustomerSupplier customerSupplier;
+    
+    private Long idCustomerSupplier;
+    
+    public String saveCustomerSupplier() {
+        service.saveCustomerSupplier(customerSupplier);
+        
+        return "/secured/customerSupplier/customers?faces-redirect=true";
+    }
+    
+    public void readCustomerSupplier() {
+        customerSupplier = service.readCustomerSupplier(idCustomerSupplier);
+    }
+
+    public CustomerSupplier getCustomerSupplier() {
+        return customerSupplier;
+    }
+
+    public void setCustomerSupplier(CustomerSupplier customerSupplier) {
+        this.customerSupplier = customerSupplier;
+    }
+
+    public Long getIdCustomerSupplier() {
+        return idCustomerSupplier;
+    }
+
+    public void setIdCustomerSupplier(Long idCustomerSupplier) {
+        this.idCustomerSupplier = idCustomerSupplier;
+    }
     
 }
