@@ -19,11 +19,9 @@ package com.dmainardi.esass.presentation.customerSupplier;
 import com.dmainardi.esass.business.boundary.customerSupplier.CustomerSupplierService;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.annotation.PreDestroy;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,38 +30,52 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@ViewScoped
-public class ListSupplierPresenter implements Serializable{
+@FlowScoped("supplier")
+public class SupplierPresenter implements Serializable {
     @Inject
     CustomerSupplierService customerSupplierService;
+
+    private CustomerSupplier customerSupplier;
     
-    private LazyCustomerSupplierDataModel lazySuppliers;
-    private List<CustomerSupplier> selectedSuppliers;
+    private Long idCustomerSupplier;
     
     @PostConstruct
     public void init() {
-        lazySuppliers = new LazyCustomerSupplierDataModel(customerSupplierService, null, Boolean.TRUE);
+        System.out.println("Entered into supplier's flow");
     }
     
-    public void deleteCustomers() {
-        if (selectedSuppliers != null && !selectedSuppliers.isEmpty()) {
-            for (CustomerSupplier supplierTemp : selectedSuppliers)
-                customerSupplierService.deleteCustomerSupplier(supplierTemp);
-        }
+    @PreDestroy
+    public void cleanUp() {
+        System.out.println("Exited from supplier's flow");
+    }
+
+    public String saveCustomerSupplier() {
+        customerSupplierService.saveCustomerSupplier(customerSupplier);
+
+        return "exitFlow";
+    }
+
+    public void detailCustomerSupplier() {
+        if (idCustomerSupplier == null)
+            customerSupplier = new CustomerSupplier();
         else
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Missing selection", "Select a supplier before deleting"));
+            customerSupplier = customerSupplierService.readCustomerSupplier(idCustomerSupplier);
     }
 
-    public LazyCustomerSupplierDataModel getLazySuppliers() {
-        return lazySuppliers;
+    public CustomerSupplier getCustomerSupplier() {
+        return customerSupplier;
     }
 
-    public List<CustomerSupplier> getSelectedSuppliers() {
-        return selectedSuppliers;
+    public void setCustomerSupplier(CustomerSupplier customerSupplier) {
+        this.customerSupplier = customerSupplier;
     }
 
-    public void setSelectedSuppliers(List<CustomerSupplier> selectedSuppliers) {
-        this.selectedSuppliers = selectedSuppliers;
+    public Long getIdCustomerSupplier() {
+        return idCustomerSupplier;
+    }
+
+    public void setIdCustomerSupplier(Long idCustomerSupplier) {
+        this.idCustomerSupplier = idCustomerSupplier;
     }
     
 }

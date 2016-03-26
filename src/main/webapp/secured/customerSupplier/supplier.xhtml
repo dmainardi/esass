@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:bnu="http://bootsfaces.net/ui">
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="contentTitle">#{msg.customerSupplier_supplier}</ui:define>
+        <ui:define name="contentSubtitle">#{msg.customerSupplier_supplier_tip}</ui:define>
+        <ui:define name="content">
+            <f:metadata>
+                <f:viewParam name="id" value="#{supplierPresenter.idCustomerSupplier}" 
+                             converter="javax.faces.Long" converterMessage="Unknown supplier, please use a link from within the system."
+                             required="true" requiredMessage="Bad request, please use a link from within the system."/>
+                <f:viewAction action="#{supplierPresenter.detailCustomerSupplier()}"/>
+            </f:metadata>
+
+            <h:form>
+                <bnu:panelGrid colSpans="6,6">
+                    <bnu:inputText id="businessName" value="#{supplierPresenter.customerSupplier.businessName}" label="#{msg.customerSupplier_customer_businessName}" renderLabel="true"/>
+                    <bnu:inputText id="name" value="#{supplierPresenter.customerSupplier.name}" label="#{msg.customerSupplier_customer_name}" renderLabel="true"/>
+                </bnu:panelGrid>
+                <bnu:panelGrid colSpans="4,4,4">
+                    <bnu:inputText id="vatRegistrationNumber" value="#{supplierPresenter.customerSupplier.vatRegistrationNumber}" label="#{msg.customerSupplier_customer_vatRegistrationNumber}" renderLabel="true"/>
+                    <bnu:inputText id="taxCode" value="#{supplierPresenter.customerSupplier.taxCode}" label="#{msg.customerSupplier_customer_taxCode}" renderLabel="true"/>
+                    <bnu:selectBooleanCheckbox id="isSupplier" value="#{supplierPresenter.customerSupplier.isCustomer}" label="#{msg.customerSupplier_supplier_isCustomer}" renderLabel="true"/>
+                </bnu:panelGrid>
+                <h:button value="#{msg.cancel}" styleClass="btn btn-default" outcome="exitFlow"/>
+                <h:commandButton value="#{msg.save}" styleClass="btn btn-primary" action="#{supplierPresenter.saveCustomerSupplier()}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
