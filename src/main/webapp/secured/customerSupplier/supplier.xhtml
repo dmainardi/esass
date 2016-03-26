@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:bnu="http://bootsfaces.net/ui">
+      xmlns:bnu="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/template/main.xhtml">
         <ui:define name="contentTitle">#{msg.customerSupplier_supplier}</ui:define>
         <ui:define name="contentSubtitle">#{msg.customerSupplier_supplier_tip}</ui:define>
@@ -25,6 +26,60 @@
                     <bnu:inputText id="vatRegistrationNumber" value="#{supplierPresenter.customerSupplier.vatRegistrationNumber}" label="#{msg.customerSupplier_customer_vatRegistrationNumber}" renderLabel="true"/>
                     <bnu:inputText id="taxCode" value="#{supplierPresenter.customerSupplier.taxCode}" label="#{msg.customerSupplier_customer_taxCode}" renderLabel="true"/>
                     <bnu:selectBooleanCheckbox id="isSupplier" value="#{supplierPresenter.customerSupplier.isCustomer}" label="#{msg.customerSupplier_supplier_isCustomer}" renderLabel="true"/>
+                </bnu:panelGrid>
+                <bnu:panelGrid colSpans="6,6">
+                    <h:dataTable value="#{supplierPresenter.customerSupplier.plants}" var="plant" id="plants"
+                                 styleClass="table table-striped table-bordered table-hover table-condensed" style="width:100%"
+                                 columnClasses=",hidden-xs,hidden-xs text-center,text-center">
+                        <f:facet name="caption">
+                            <h4>#{msg.customerSupplier_customer_plants}</h4>
+                        </f:facet>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{msg.customerSupplier_customer_plant_name}" />
+                            </f:facet>
+                            <h:outputText value="#{plant.name}" />
+                        </h:column>
+                        <h:column headerClass="hidden-xs">
+                            <f:facet name="header">
+                                <h:outputText value="#{msg.customerSupplier_customer_plant_address}" />
+                            </f:facet>
+                            <h:outputText value="#{plant.address}" />
+                        </h:column>
+                        <h:column headerClass="hidden-xs text-center">
+                            <f:facet name="header">
+                                <h:outputText value="#{msg.customerSupplier_customer_plant_isHeadOffice}" />
+                            </f:facet>
+                            <h:outputText value="#{plant.isHeadOffice?'X':''}" />
+                        </h:column>
+                        <h:column headerClass="text-center">
+                            <f:facet name="header">
+                                <h:outputText value="#{msg.actions}" />
+                            </f:facet>
+                            <bnu:buttonGroup size="xs">
+                                <bnu:commandButton value="" iconAwesome="pencil-square-o"/>
+                                <bnu:commandButton value="" iconAwesome="trash-o"/>
+                            </bnu:buttonGroup>
+                        </h:column>
+                    </h:dataTable>
+                    <h:dataTable value="#{supplierPresenter.customerSupplier.referees}" var="referee" id="referees"
+                                 styleClass="table table-striped table-bordered table-hover table-condensed" style="width:100%">
+                        <f:facet name="caption">
+                            <h:outputText value="Elenco referees"/>
+                        </f:facet>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Name" />
+                            </f:facet>
+                            <h:outputText value="#{referee.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Phone" />
+                            </f:facet>
+                            <h:outputText value="#{referee.phone}" />
+                        </h:column>
+                    </h:dataTable>
                 </bnu:panelGrid>
                 <h:button value="#{msg.cancel}" styleClass="btn btn-default" outcome="exitFlow"/>
                 <h:commandButton value="#{msg.save}" styleClass="btn btn-primary" action="#{supplierPresenter.saveCustomerSupplier()}"/>

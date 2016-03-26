@@ -19,8 +19,6 @@ package com.dmainardi.esass.presentation.customerSupplier;
 import com.dmainardi.esass.business.boundary.customerSupplier.CustomerSupplierService;
 import com.dmainardi.esass.business.entity.customerSupplier.CustomerSupplier;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,16 +36,6 @@ public class SupplierPresenter implements Serializable {
     private CustomerSupplier customerSupplier;
     
     private Long idCustomerSupplier;
-    
-    @PostConstruct
-    public void init() {
-        System.out.println("Entered into supplier's flow");
-    }
-    
-    @PreDestroy
-    public void cleanUp() {
-        System.out.println("Exited from supplier's flow");
-    }
 
     public String saveCustomerSupplier() {
         customerSupplierService.saveCustomerSupplier(customerSupplier);
@@ -56,7 +44,7 @@ public class SupplierPresenter implements Serializable {
     }
 
     public void detailCustomerSupplier() {
-        if (idCustomerSupplier == null)
+        if (idCustomerSupplier == null || idCustomerSupplier == 0)
             customerSupplier = new CustomerSupplier();
         else
             customerSupplier = customerSupplierService.readCustomerSupplier(idCustomerSupplier);

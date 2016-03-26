@@ -20,6 +20,9 @@
                         <p:commandButton value="#{msg.delete}" actionListener="#{listSupplierPresenter.deleteCustomers()}" update="@form">
                             <p:confirm header="#{msg.customerSupplier_suppliers_delete}" message="#{msg.customerSupplier_suppliers_delete_tip}" icon="ui-icon-alert"/>
                         </p:commandButton>
+                        <h:button value="#{msg.new}" styleClass="btn btn-default btn-sm" outcome="supplier">
+                            <f:param name="id" value="0" />
+                        </h:button>
                     </f:facet>
                     <p:column headerText="#{msg.customerSupplier_customer_businessName}" filterBy="#{supplier.businessName}" sortBy="#{supplier.businessName}" priority="3">
                         <h:outputText value="#{supplier.businessName}"/>
@@ -28,9 +31,9 @@
                         <h:outputText value="#{supplier.name}"/>
                     </p:column>
                     <p:column headerText="#{msg.actions}">
-                        <h:link value="#{msg.edit}" outcome="supplier">
+                        <h:button value="#{msg.edit}" styleClass="btn btn-default btn-sm" outcome="supplier">
                             <f:param name="id" value="#{supplier.id}" />
-                        </h:link>
+                        </h:button>
                     </p:column>
                 </p:dataTable>
             </h:form>

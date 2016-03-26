@@ -59,6 +59,7 @@ public class Plant extends BaseEntity<Long>{
     private String notes;
 
     public Plant() {
+        isHeadOffice = false;
     }
 
     public String getName() {
